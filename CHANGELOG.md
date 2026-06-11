@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.39.2 (2026-06-11)
+
+Full Changelog: [v4.39.1...v4.39.2](https://github.com/openai/openai-java/compare/v4.39.1...v4.39.2)
+
+### Build System
+
+* Use CI environment for OpenAI API key workflow ([#756](https://github.com/openai/openai-java/issues/756)) ([27de5f5](https://github.com/openai/openai-java/commit/27de5f5b159394b7f29a31389854890460122c1a))
+* Use publish environment for release job ([#758](https://github.com/openai/openai-java/issues/758)) ([bbb66f8](https://github.com/openai/openai-java/commit/bbb66f870877a3e9e3f73c5c41eb4558f23a901a))
+
 ## 4.39.1 (2026-06-04)
 
 Full Changelog: [v4.39.0...v4.39.1](https://github.com/openai/openai-java/compare/v4.39.0...v4.39.1)
