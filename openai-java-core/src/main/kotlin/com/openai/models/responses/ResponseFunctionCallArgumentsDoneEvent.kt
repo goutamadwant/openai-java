@@ -14,6 +14,7 @@ import com.openai.core.checkRequired
 import com.openai.errors.OpenAIInvalidDataException
 import java.util.Collections
 import java.util.Objects
+import java.util.Optional
 
 /** Emitted when function-call arguments are finalized. */
 class ResponseFunctionCallArgumentsDoneEvent
@@ -61,10 +62,10 @@ private constructor(
     /**
      * The name of the function that was called.
      *
-     * @throws OpenAIInvalidDataException if the JSON field has an unexpected type or is
-     *   unexpectedly missing or null (e.g. if the server responded with an unexpected value).
+     * @throws OpenAIInvalidDataException if the JSON field has an unexpected type (e.g. if the
+     *   server responded with an unexpected value).
      */
-    fun name(): String = name.getRequired("name")
+    fun name(): Optional<String> = name.getOptional("name")
 
     /**
      * The index of the output item.
@@ -152,7 +153,6 @@ private constructor(
          * ```java
          * .arguments()
          * .itemId()
-         * .name()
          * .outputIndex()
          * .sequenceNumber()
          * ```
@@ -165,7 +165,7 @@ private constructor(
 
         private var arguments: JsonField<String>? = null
         private var itemId: JsonField<String>? = null
-        private var name: JsonField<String>? = null
+        private var name: JsonField<String> = JsonMissing.of()
         private var outputIndex: JsonField<Long>? = null
         private var sequenceNumber: JsonField<Long>? = null
         private var type: JsonValue = JsonValue.from("response.function_call_arguments.done")
@@ -287,7 +287,6 @@ private constructor(
          * ```java
          * .arguments()
          * .itemId()
-         * .name()
          * .outputIndex()
          * .sequenceNumber()
          * ```
@@ -298,7 +297,7 @@ private constructor(
             ResponseFunctionCallArgumentsDoneEvent(
                 checkRequired("arguments", arguments),
                 checkRequired("itemId", itemId),
-                checkRequired("name", name),
+                name,
                 checkRequired("outputIndex", outputIndex),
                 checkRequired("sequenceNumber", sequenceNumber),
                 type,

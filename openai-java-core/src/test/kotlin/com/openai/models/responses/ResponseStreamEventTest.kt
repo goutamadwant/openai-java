@@ -2557,6 +2557,35 @@ internal class ResponseStreamEventTest {
     }
 
     @Test
+    fun functionCallArgumentsDoneWhenNameMissing() {
+        val responseStreamEvent =
+            jsonMapper()
+                .readValue(
+                    """
+                    {
+                      "type": "response.function_call_arguments.done",
+                      "arguments": "{}",
+                      "item_id": "fc_071179986c0b4d5f016977cf066b3481939993c816cc22819c",
+                      "output_index": 0,
+                      "sequence_number": 4
+                    }
+                    """
+                        .trimIndent(),
+                    jacksonTypeRef<ResponseStreamEvent>(),
+                )
+
+        responseStreamEvent.validate()
+
+        val functionCallArgumentsDone = responseStreamEvent.functionCallArgumentsDone().get()
+        assertThat(functionCallArgumentsDone.arguments()).isEqualTo("{}")
+        assertThat(functionCallArgumentsDone.itemId())
+            .isEqualTo("fc_071179986c0b4d5f016977cf066b3481939993c816cc22819c")
+        assertThat(functionCallArgumentsDone.name()).isEmpty()
+        assertThat(functionCallArgumentsDone.outputIndex()).isEqualTo(0L)
+        assertThat(functionCallArgumentsDone.sequenceNumber()).isEqualTo(4L)
+    }
+
+    @Test
     fun ofInProgress() {
         val inProgress =
             ResponseInProgressEvent.builder()
